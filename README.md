@@ -9,7 +9,7 @@
 - [Задание №1](#задание-1): branch [`task1`](https://github.com/bekmnsrw/information-retrieval-course/pull/1)
 - [Задание №2](#задание-2): branch [`task2`](https://github.com/bekmnsrw/information-retrieval-course/pull/2)
 - [Задание №3](#задание-3): branch [`task3`](https://github.com/bekmnsrw/information-retrieval-course/pull/4)
-- [Задание №4](#задание-4): branch `task4`
+- [Задание №4](#задание-4): branch [`task4`](https://github.com/bekmnsrw/information-retrieval-course/pull/5)
 - [Задание №5](#задание-5): branch `task5`
 - [Задание №6 (Демо)](#задание-6-демо): branch `task6`
 

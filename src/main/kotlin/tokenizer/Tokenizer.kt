@@ -1,6 +1,9 @@
 package tokenizer
 
-import com.github.demidko.aot.WordformMeaning.lookupForMeanings
+import Utils.WEB_PAGES_PATH
+import Utils.lemmatize
+import Utils.replaceHtmlExtension
+import Utils.tokenizeAndCleanText
 import org.jsoup.Jsoup
 import java.io.File
 
@@ -16,8 +19,6 @@ internal interface Tokenizer {
 
 internal class TokenizerImpl : Tokenizer {
 
-    private val stopWords = getStopWords()
-    private val typos = getTypos()
     private val pageTokens = mutableMapOf<String, MutableSet<String>>()
     private val pageLemmas = mutableMapOf<String, MutableMap<String, MutableSet<String>>>()
 
@@ -35,28 +36,11 @@ internal class TokenizerImpl : Tokenizer {
         pageTokens.forEach { (pageName, tokens) ->
             val lemmas = mutableMapOf<String, MutableSet<String>>()
             tokens.forEach { token ->
-                lemmas.getOrPut(lemmatizeToken(token)) { mutableSetOf() }.add(token)
+                lemmas.getOrPut(lemmatize(token)) { mutableSetOf() }.add(token)
             }
             pageLemmas[pageName] = lemmas
         }
         writeListOfLemmas()
-    }
-
-    private fun tokenizeAndCleanText(text: String): List<String> {
-        return text.split("\\s+".toRegex())
-            .asSequence()
-            .map { cleanWord(it) }
-            .filter { isValidWord(it) }
-            .toList()
-    }
-
-    private fun cleanWord(word: String): String {
-        return word.replace("[^а-яА-Я-]".toRegex(), EMPTY_STRING)
-            .lowercase()
-    }
-
-    private fun isValidWord(word: String): Boolean {
-        return word.isNotBlank() && word.length > 2 && word !in stopWords && word !in typos
     }
 
     private fun writeListOfTokens() {
@@ -77,26 +61,6 @@ internal class TokenizerImpl : Tokenizer {
         }
     }
 
-    private fun lemmatizeToken(token: String): String {
-        return lookupForMeanings(token)
-            .map { meaning -> meaning.lemma.toString() }
-            .firstOrNull() ?: token
-    }
-
-    private fun getStopWords(): Set<String> {
-        return File(STOPWORDS_FILE_PATH).readLines()
-            .map { word -> word.trim().lowercase() }
-            .filter { word -> word.isNotBlank() }
-            .toSet()
-    }
-
-    private fun getTypos(): Set<String> {
-        return File(TYPOS_FILE_PATH).readLines()
-            .map { word -> word.trim().lowercase() }
-            .filter { word -> word.isNotBlank() }
-            .toSet()
-    }
-
     private fun writeToFile(filePath: String, text: String) {
         File(filePath).apply {
             if (exists()) {
@@ -109,17 +73,10 @@ internal class TokenizerImpl : Tokenizer {
         }
     }
 
-    private fun String.replaceHtmlExtension(): String {
-        return this.replace(".html", ".txt")
-    }
-
     private companion object {
 
-        const val STOPWORDS_FILE_PATH = "src/main/kotlin/tokenizer/stopwords.txt"
-        const val TYPOS_FILE_PATH = "src/main/kotlin/tokenizer/typos.txt"
         const val LEMMAS_OUTPUT_PATH = "output/lemmas"
         const val TOKENS_OUTPUT_PATH = "output/tokens"
-        const val WEB_PAGES_PATH = "output/pages"
 
         const val EMPTY_STRING = ""
         const val NEWLINE = "\n"

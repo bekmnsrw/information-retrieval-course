@@ -5,6 +5,8 @@ import inverted_index.BooleanSearchImpl
 import inverted_index.InvertedIndex
 import inverted_index.InvertedIndexImpl
 import kotlinx.coroutines.runBlocking
+import tf_idf.TfIdfCalculator
+import tf_idf.TfIdfCalculatorImpl
 import tokenizer.Tokenizer
 import tokenizer.TokenizerImpl
 
@@ -16,7 +18,7 @@ fun main() = runBlocking {
     /**
      * Replace with appropriate task number from [Task.entries] and run [main] function
      */
-    val task = Task._3
+    val task = Task._4
 
     when (task) {
         Task._1 -> {
@@ -67,18 +69,25 @@ fun main() = runBlocking {
                 }
             }
         }
-        Task._4 -> {}
+        Task._4 -> {
+            val tfIdfCalculator: TfIdfCalculator = TfIdfCalculatorImpl(
+                /** Uncomment for testing **/
+                // pagesPath = Utils.WEB_PAGES_TEST_PATH,
+                // outputPrefix = Utils.OUTPUT_TEST_PREFIX,
+            )
+            tfIdfCalculator.calculateTfIdf()
+        }
         Task._5 -> {}
         Task._6 -> {}
     }
 }
 
-internal enum class Task(val taskName: String) {
+internal enum class Task {
 
-    _1("Crawler"),
-    _2("Tokenizer"),
-    _3(""),
-    _4(""),
-    _5(""),
-    _6(""),
+    _1, // Crawler
+    _2, // Tokenizer
+    _3, // Inverted Index
+    _4, // TF-IDF
+    _5, //
+    _6, //
 }

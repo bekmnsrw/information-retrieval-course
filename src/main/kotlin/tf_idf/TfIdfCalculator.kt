@@ -1,5 +1,6 @@
 package tf_idf
 
+import Utils.OUTPUT_PREFIX
 import Utils.WEB_PAGES_PATH
 import Utils.lemmatize
 import Utils.replaceHtmlExtension
@@ -18,7 +19,7 @@ internal interface TfIdfCalculator {
 
 internal class TfIdfCalculatorImpl(
     pagesPath: String = WEB_PAGES_PATH,
-    private val outputPrefix: String = "output",
+    private val outputPrefix: String = OUTPUT_PREFIX,
 ) : TfIdfCalculator {
 
     private val pages = File(pagesPath).listFiles()?.toList() ?: emptyList()

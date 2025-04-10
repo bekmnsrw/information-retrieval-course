@@ -8,6 +8,7 @@ internal object Utils {
 
     const val WEB_PAGES_PATH = "output/pages"
     const val WEB_PAGES_TEST_PATH = "output/test/pages"
+    const val OUTPUT_PREFIX = "output"
     const val OUTPUT_TEST_PREFIX = "output/test"
 
     fun String.replaceHtmlExtension(): String {

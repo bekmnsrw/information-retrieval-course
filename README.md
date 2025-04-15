@@ -11,7 +11,7 @@
 - [Задание №3](#задание-3): branch [`task3`](https://github.com/bekmnsrw/information-retrieval-course/pull/4)
 - [Задание №4](#задание-4): branch [`task4`](https://github.com/bekmnsrw/information-retrieval-course/pull/5)
 - [Задание №5](#задание-5): branch [`task5`](https://github.com/bekmnsrw/information-retrieval-course/pull/6)
-- [Задание №6 (Демо)](#задание-6-демо): branch `task6`
+- [Задание №6 (Демо)](#задание-6-демо): branch [`task6`](https://github.com/bekmnsrw/information-retrieval-course/pull/7)
 
 
 ## Постановка задачи

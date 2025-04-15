@@ -9,6 +9,8 @@ import tf_idf.TfIdfCalculator
 import tf_idf.TfIdfCalculatorImpl
 import tokenizer.Tokenizer
 import tokenizer.TokenizerImpl
+import vector.VectorSearch
+import vector.VectorSearchImpl
 
 /**
  * @author i.bekmansurov
@@ -18,7 +20,7 @@ fun main() = runBlocking {
     /**
      * Replace with appropriate task number from [Task.entries] and run [main] function
      */
-    val task = Task._4
+    val task = Task._5
 
     when (task) {
         Task._1 -> {
@@ -77,7 +79,39 @@ fun main() = runBlocking {
             )
             tfIdfCalculator.calculateTfIdf()
         }
-        Task._5 -> {}
+        Task._5 -> {
+            val vectorSearch: VectorSearch = VectorSearchImpl()
+
+            println("Введите поисковый запрос или 'exit' для выхода:")
+
+            while (true) {
+                print("> ")
+                val input = readlnOrNull()?.trim() ?: break
+
+                when {
+                    input.equals("exit", ignoreCase = true) -> {
+                        println("Завершение работы поисковой системы")
+                        break
+                    }
+                    input.isBlank() -> {
+                        println("Пожалуйста, введите непустой запрос")
+                        continue
+                    }
+                    else -> {
+                        val results = vectorSearch.search(input)
+                        if (results.isEmpty()) {
+                            println("\nНичего не найдено по запросу: \"$input\"\n")
+                        } else {
+                            println("\nРезультаты поиска (${results.size}):")
+                            results.forEachIndexed { index, result ->
+                                val similarity = "%.4f".format(result.cosineSimilarity)
+                                println("${index + 1}. ${result.url} $similarity")
+                            }
+                        }
+                    }
+                }
+            }
+        }
         Task._6 -> {}
     }
 }
@@ -88,6 +122,6 @@ internal enum class Task {
     _2, // Tokenizer
     _3, // Inverted Index
     _4, // TF-IDF
-    _5, //
+    _5, // Vector Search
     _6, //
 }

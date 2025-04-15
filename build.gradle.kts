@@ -18,6 +18,8 @@ dependencies {
     val coroutines = "1.9.0"
     val compress = "1.23.0"
     val aot = "2025.02.15"
+    val ktor = "1.6.8"
+    val kotlinHtml = "0.7.5"
 
     /**
      * Dependencies
@@ -26,6 +28,9 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines")
     implementation("org.apache.commons:commons-compress:$compress")
     implementation("com.github.demidko:aot:$aot")
+    implementation("io.ktor:ktor-server-netty:$ktor")
+    implementation("io.ktor:ktor-html-builder:$ktor")
+    implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:$kotlinHtml")
 }
 
 kotlin {

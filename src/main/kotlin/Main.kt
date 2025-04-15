@@ -11,6 +11,8 @@ import tokenizer.Tokenizer
 import tokenizer.TokenizerImpl
 import vector.VectorSearch
 import vector.VectorSearchImpl
+import web.WebServer
+import web.WebServerImpl
 
 /**
  * @author i.bekmansurov
@@ -20,7 +22,7 @@ fun main() = runBlocking {
     /**
      * Replace with appropriate task number from [Task.entries] and run [main] function
      */
-    val task = Task._5
+    val task = Task._6
 
     when (task) {
         Task._1 -> {
@@ -112,7 +114,11 @@ fun main() = runBlocking {
                 }
             }
         }
-        Task._6 -> {}
+        Task._6 -> {
+            val vectorSearch: VectorSearch = VectorSearchImpl()
+            val webServer: WebServer = WebServerImpl(vectorSearch)
+            webServer.start()
+        }
     }
 }
 
@@ -123,5 +129,5 @@ internal enum class Task {
     _3, // Inverted Index
     _4, // TF-IDF
     _5, // Vector Search
-    _6, //
+    _6, // Web (Demo)
 }
